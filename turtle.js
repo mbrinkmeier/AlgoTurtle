@@ -463,14 +463,20 @@ Turtle.generateCode = function() {
   Blockly.JavaScript.blockToCode = function(block) {
     if ( block == null ) return "";
     var root = block.getRootBlock();
-    var prefix = "";
+    var code = "";
     if ( (root.type != "main") && ( root.type != "procedures_defreturn" ) && ( root.type != "procedures_defnoreturn" )) {
       return "";
+    } else {
+      // console.log("Not ignoring " + block.type);
+      code = Turtle.origBlockToCode.call(Blockly.JavaScript,block);
+      // console.log(code);
     }
-    return prefix + Turtle.origBlockToCode.call(Blockly.JavaScript,block);
+    return code;
   }
 
   var code = Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace);
   Blockly.JavaScript.blockToCode = Turtle.origBlockToCode;
+
+  console.log(code);
   return code;
 }
